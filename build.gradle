@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'groovy'
+    id 'idea'
+    id 'application'
+
+    id 'com.gradleup.shadow' version '8.3.5'
+}
+
+group = 'me.phen.spewak'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform('org.apache.groovy:groovy-bom:4.0.24')
+    implementation (
+        'org.apache.groovy:groovy',
+        'se.michaelthelin.spotify:spotify-web-api-java:8.4.1'
+    )
+
+    testImplementation platform('org.spockframework:spock-bom:2.3-groovy-4.0')
+    testImplementation (
+        'org.spockframework:spock-core'
+    )
+
+    testRuntimeOnly (
+        'net.bytebuddy:byte-buddy:1.15.8', // allows mocking of classes (in addition to interfaces)
+        'org.objenesis:objenesis:3.4'
+    )
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+
+mainClassName = 'me.phen.spewak.Runner'
+
+jar {
+    manifest {
+
+    }
+}
